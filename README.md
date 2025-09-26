@@ -1,6 +1,6 @@
 This project was built as part of the Cloud Engineering courseware, Learn to Cloud. Visit here to learn more: https://learntocloud.guide/
 
-This README does detail my process of building this project, but is not intended as a step by step guide and does not include every action taken. If you decide to try this yourself, separate research will be required to fully complete this environment.
+This README does detail my process of building this project, but is not intended as a step by step guide and does not include every action taken.
 
 # Intro
 
@@ -20,14 +20,14 @@ Let's first define our end goals for the environment. In addition to your applic
 
 First, we create a VNet with the address space of 192.168.1.0 /24. We don't need extensive space for this VNet as it's use will be limited to this project.
 
-<picture here>
+<img width="818" height="108" alt="image" src="https://github.com/user-attachments/assets/e83080fc-de2f-4a9f-a757-30115b5f19dd" />
 
 # Subnets
 
 Next, we'll define our subnets. We want to separate the app and database into different subnets. We'll need to apply different traffic rules to each tier of our application in order to follow the "principle of least priveledge"  
 Optionally, include an Azure Bastion subnet. A subnet titled specifically "AzureBastion" with a minium CIDR block of /26 is required if you intend to deploy a Bastion to this project.
 
-<picture here>
+<img width="750" height="152" alt="image" src="https://github.com/user-attachments/assets/a930f50b-0a62-46cb-b0d8-13f07271dbeb" />
 
 # Network Security Groups
 
@@ -35,13 +35,13 @@ Optionally, include an Azure Bastion subnet. A subnet titled specifically "Azure
 
 Here's our configuration for the database subnet, apart from Azure NSG defaults. We allow inbound from the API subnet with a destination of port 5432 so that our API can communicate with our database. We also allow SSH from the API subnet. This is because our database VM, as you'll see later, cannot be accessed from the internet at all. So when we SSH into the database VM, we're actually passing through the API VM.
 
-<picture here>
+<img width="1480" height="132" alt="image" src="https://github.com/user-attachments/assets/31d93bf5-fcf4-423a-bac8-35d64921a9af" />
 
 ## API
 
-The API subnet's NSG, apart from defaults. We allow inbound SSH specifically from our own public IP address We allow HTTP from the internet for access to the API, as well as allowing the Azure Load Balancer, to forward the traffic.
+The API subnet's NSG, apart from defaults. We allow inbound SSH specifically from our own public IP address. We allow HTTP from the internet for access to the API, as well as allowing the Azure Load Balancer, to forward the traffic.
 
-<picture here>
+<img width="1474" height="156" alt="image" src="https://github.com/user-attachments/assets/c99c0d4b-1c1f-4085-8deb-c71c745d9f17" />
 
 # NAT Gateway
 
@@ -51,14 +51,14 @@ A NAT Gateway with an outbound IP address attached to both subnets handles egres
 
 Since we don't want out API VM to have a public IP we use a Public Load Balancer to handle inbound traffic. As part of the config, we map the front end port 80 to the back end port 80.
 
-<picture here>
+<img width="750" height="446" alt="image" src="https://github.com/user-attachments/assets/5441a588-f587-4abb-b8c2-95711d77cefe" />
 
 # SSH
 
 When creating your two VMs, make sure to choose the SSH key authentication method. Upon deployment, you'll receive an option to download the a new key pair.  
 Copy the files into your .ssh folder on your local machine. For me, on Windows, that was "C:\Users\<username>\.ssh"
 
-<picture here>
+<img width="320" height="208" alt="image" src="https://github.com/user-attachments/assets/1fe3ef70-a412-4d70-82b9-5792f0d0304c" />
 
 Then make sure you have the VS Code extension "Remote- - SSH"
 
@@ -146,7 +146,7 @@ We'll want to configure some type of backup solution for our database. I decided
 
 Create a data disk for your DB VM.
 
-<picture here>
+<img width="1048" height="206" alt="image" src="https://github.com/user-attachments/assets/6cc9e1c1-4a8b-4e4e-935d-32139f50f872" />
 
 You'll need to attach it to the VM  
 This guide can help: https://learn.microsoft.com/en-us/azure/virtual-machines/linux/attach-disk-portal
@@ -156,7 +156,7 @@ Consult your AI chat of choice for instructions on this, as it is rather complic
 
 Next we need to create the storage account and azure blob container
 
-<picture here>
+<img width="576" height="288" alt="image" src="https://github.com/user-attachments/assets/3f9bbcc8-6573-43b2-8e42-9478ea10c8b2" />
 
 Then install azcopy: https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10?tabs=apt  
 create a script that will create a pg dump and azcopy it to the blob storage
@@ -206,7 +206,7 @@ sudo -u postgres /var/lib/postgresql/scripts/pg_backup.sh
 
 Then check that a backup was created on your Azure storage blob
 
-<picture here>
+<img width="1000" height="276" alt="image" src="https://github.com/user-attachments/assets/f763b11d-edf2-41ce-bf55-6ab139aec94f" />
 
 # How to verify it works
 
@@ -222,6 +222,7 @@ From your local PC's terminal to test internet accessibility
 curl -i http://<LB_PUBLIC_IP>/
 curl -i http://<LB_PUBLIC_IP>/health
 ```
+<img width="450" height="116" alt="image" src="https://github.com/user-attachments/assets/7362cb47-e699-4ad1-9dc4-b1216a22055a" />
 
 From your local browser, navigate to the docs page:
 
@@ -240,7 +241,7 @@ SELECT * FROM public.entries
 
 You should see your entries populate
 
-<picture here>
+<img width="1396" height="146" alt="image" src="https://github.com/user-attachments/assets/bb79cb53-efb0-4794-9b8b-428d60b681ca" />
 
 # How to improve this project
 
