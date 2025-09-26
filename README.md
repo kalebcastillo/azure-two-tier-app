@@ -15,11 +15,11 @@ In this project, we've deployed an existing journal API + Database to Azure usin
 
 Let's first define our end goals for the environment. In addition to your application of course functioning as expected, we want to accomplish the following:
 
-• SSH to the VMs should be restricted to only your own IP address. Optionally, configure a cloud native solution (Azure Bastion)  
-• The API should only accept HTTP/HTTPS traffic from the internet  
-• The Database should only accept connections directly from the API server  
-• API and Database automatically start upon server boots/restarts 
-• Regular database backups to Azure blob storage 
+- SSH to the VMs should be restricted to only your own IP address. Optionally, configure a cloud native solution (Azure Bastion)
+- The API should only accept HTTP/HTTPS traffic from the internet  
+- The Database should only accept connections directly from the API server  
+- Regular database backups to Azure blob storage 
+- API and Database automatically start upon server boots/restarts 
 
 # Networking
 
@@ -329,7 +329,6 @@ From your local PC's terminal to test internet accessibility:
 ```
 curl -i http://<LB_PUBLIC_IP>/
 curl -i http://<LB_PUBLIC_IP>/health
-
 ```
 <img width="450" height="116" alt="image" src="https://github.com/user-attachments/assets/7362cb47-e699-4ad1-9dc4-b1216a22055a" />
 
@@ -338,7 +337,6 @@ From your local browser, navigate to the docs page:
 
 ```
 http://<frontend IP of load balancer>/docs
-
 ```
 
 Create some sample entries from this page.
