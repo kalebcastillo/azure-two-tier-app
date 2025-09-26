@@ -2,19 +2,24 @@ This project was built as part of the Cloud Engineering courseware, Learn to Clo
 
 This README details my process of building this project, but is not intended as a step by step guide and does not include every action taken.
 
-# Intro
+
+
+# Architecture Diagram
 
 In this project, we've deployed an existing journal API + Database to Azure using a two-tier architecture. The primary goal of this exercise was to understand cloud architecture patterns, especially regarding networking. We also delve into some Linux Systems Administration.
+
+<img width="1872" height="1828" alt="KalebPhase3_DarkMode" src="https://github.com/user-attachments/assets/6b707e4a-8b9f-49c2-a6ce-fbe743f9b9be" />
+
 
 # Goals for this project
 
 Let's first define our end goals for the environment. In addition to your application of course functioning as expected, we want to accomplish the following:
 
+• SSH to the VMs should be restricted to only your own IP address. Optionally, configure a cloud native solution (Azure Bastion)  
 • The API should only accept HTTP/HTTPS traffic from the internet  
 • The Database should only accept connections directly from the API server  
-• SSH to the VMs should be restricted to only your own IP address. Optionally, configure a cloud native solution (Azure Bastion)  
-• Regular database backups to Azure blob storage  
-• API and Database automatically start upon server boots/restarts  
+• API and Database automatically start upon server boots/restarts 
+• Regular database backups to Azure blob storage 
 
 # Networking
 
@@ -155,7 +160,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now journalapi
 ```
 
-Because we don't want to open port 8000 to the Internet, we utilize an nginx reverse proxy, mapping port 80 to 127.0.0.1:8000  
+Because we don't want to open port 8000 to the Internet, we utilize an Nginx reverse proxy, mapping port 80 to 127.0.0.1:8000  
 First install Nginx.
 
 ```bash
@@ -359,3 +364,5 @@ All of this can certainly be done through Azure CLI
 
 However, even better would be to define these resources via Terraform.  
 I intend to do that in the near future, as well as implement other DevOps methodologies to this project.
+
+If you notice any other ways this project can be improved, please let me know! I'm actively working on learning more regarding best practices.
